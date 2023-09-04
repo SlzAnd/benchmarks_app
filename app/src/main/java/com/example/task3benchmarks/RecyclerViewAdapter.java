@@ -1,6 +1,5 @@
 package com.example.task3benchmarks;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,11 @@ import com.example.task3benchmarks.data.DataItem;
 
 import java.util.List;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DataViewHolder> {
 
     private List<DataItem> items;
 
-    public DataAdapter(List<DataItem> items) {
+    public RecyclerViewAdapter(List<DataItem> items) {
         this.items = items;
     }
 
