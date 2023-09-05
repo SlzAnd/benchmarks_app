@@ -1,21 +1,21 @@
 package com.example.task3benchmarks.data;
 
 public class DataItem {
-    private String operation;
+    private Operation operation;
     private String dataStructure;
-    private Integer time;
-    public DataItem(String operation, String dataStructure, Integer time) {
+    private Long time;
+    public DataItem(Operation operation, String dataStructure, Long time) {
         this.operation = operation;
         this.dataStructure = dataStructure;
         this.time = time;
     }
 
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
@@ -27,11 +27,11 @@ public class DataItem {
         this.dataStructure = dataStructure;
     }
 
-    public String getOperation() {
+    public Operation getOperation() {
         return operation;
     }
 
-    public void setOperation(String operation) {
+    public void setOperation(Operation operation) {
         this.operation = operation;
     }
 }

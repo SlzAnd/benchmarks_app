@@ -3,6 +3,7 @@ package com.example.task3benchmarks;
 import static com.example.task3benchmarks.util.AppConstants.EXTRA_KEY;
 import static com.example.task3benchmarks.util.AppConstants.REQUEST_KEY;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.task3benchmarks.databinding.DialogEnterBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,12 +26,26 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class EnterDialog extends DialogFragment {
 
+    public static String TAG = "EnterDialog";
     private DialogEnterBinding binding = null;
+    private AppViewModel viewModel;
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        return super.onCreateDialog(savedInstanceState);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(AppViewModel.class);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogEnterBinding.inflate(inflater, container, false);
-
         changeStyleFromTextChanges(binding.dialogInput);
 
         binding.calculateButton.setOnClickListener(v -> {
