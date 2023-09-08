@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding = null;
-    private AppViewModel viewModel;
+    AppViewModel viewModel;
     private int currentTabPosition = 0;
 
 

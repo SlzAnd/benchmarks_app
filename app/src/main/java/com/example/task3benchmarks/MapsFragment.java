@@ -26,19 +26,22 @@ import com.example.task3benchmarks.presentation.VerticalSpaceItemDecoration;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class MapsFragment extends Fragment {
 
     private FragmentCollectionsBinding binding = null;
-    private AppViewModel viewModel;
+    AppViewModel viewModel;
 
-    //TODO: Dependency Injection!!
-    private final DataSetCreator dataSetCreator = new DataSetCreator();
+    @Inject
+    DataSetCreator dataSetCreator;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.getInstance().getAppComponent().inject(this);
         viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
     }
 

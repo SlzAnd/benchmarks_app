@@ -13,15 +13,24 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class UseCases {
 
-    private static DataSetCreator dataSetCreator = new DataSetCreator();
+    @Inject
+    public UseCases() {
+        MyApplication.getInstance().getAppComponent().inject(this);
+    }
 
-    public static Observable<DataItem> getCollectionsObservable(int size) {
+    @Inject
+    DataSetCreator dataSetCreator;
+
+
+    public Observable<DataItem> getCollectionsObservable(int size) {
         return Observable
                 .fromIterable(dataSetCreator.getCollectionsDataSet())
                 .flatMap(item -> Observable.just(item)
@@ -51,7 +60,7 @@ public class UseCases {
                 );
     }
 
-    public static Observable<DataItem> getMapsObservable(int size) {
+    public Observable<DataItem> getMapsObservable(int size) {
         return Observable
                 .fromIterable(dataSetCreator.getMapsDataSet())
                 .flatMap(item -> Observable.just(item)
@@ -81,7 +90,7 @@ public class UseCases {
                 );
     }
 
-    private static Long calculateCollectionOperationDuration(List<Integer> list, Operation operation) {
+    private Long calculateCollectionOperationDuration(List<Integer> list, Operation operation) {
         long startTime = System.currentTimeMillis();
         if (operation == Operation.ADD_START) {
             list.add(0, 0);
@@ -102,7 +111,7 @@ public class UseCases {
         return endTime - startTime;
     }
 
-    private static Long calculateMapOperationDuration(Map<String, String> map, Operation operation) {
+    private Long calculateMapOperationDuration(Map<String, String> map, Operation operation) {
         String key = String.valueOf(map.size() / 2);
         long startTime = System.currentTimeMillis();
         if (operation == Operation.ADD) {

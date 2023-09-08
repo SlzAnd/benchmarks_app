@@ -3,7 +3,13 @@ package com.example.task3benchmarks.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class DataSetCreator {
+
+    @Inject
+    public DataSetCreator() {
+    }
 
     private List<Operation> collectionOperations = List.of(
             Operation.ADD_START,

@@ -8,12 +8,23 @@ import com.example.task3benchmarks.data.DataItem;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AppViewModel extends ViewModel {
+
+
+    public AppViewModel() {
+        MyApplication.getInstance().getAppComponent().inject(this);
+    }
+
+    @Inject
+    UseCases useCases;
 
     // Variables
     public int size = 0;
@@ -44,7 +55,7 @@ public class AppViewModel extends ViewModel {
     public void startCollectionsCalculation() {
         disposables.clear();
         isCalculating.setValue(true);
-        Disposable disposable = UseCases.getCollectionsObservable(size)
+        Disposable disposable = useCases.getCollectionsObservable(size)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
@@ -67,7 +78,7 @@ public class AppViewModel extends ViewModel {
     public void startMapsCalculations() {
         disposables.clear();
         isCalculating.setValue(true);
-        Disposable disposable = UseCases.getMapsObservable(size)
+        Disposable disposable = useCases.getMapsObservable(size)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
