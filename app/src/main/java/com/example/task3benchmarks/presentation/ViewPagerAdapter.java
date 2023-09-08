@@ -6,9 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.task3benchmarks.CollectionsFragment;
-import com.example.task3benchmarks.MapsFragment;
-
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
 

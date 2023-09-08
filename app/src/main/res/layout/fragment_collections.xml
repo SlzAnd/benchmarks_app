@@ -5,7 +5,7 @@
     android:id="@+id/collections_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CollectionsFragment">
+    tools:context=".presentation.CollectionsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/collections_recycler_view"

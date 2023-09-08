@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.task3benchmarks.data.DataItem;
+import com.example.task3benchmarks.use_case.CalculationUseCases;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,7 +25,7 @@ public class AppViewModel extends ViewModel {
     }
 
     @Inject
-    UseCases useCases;
+    CalculationUseCases useCases;
 
     // Variables
     public int size = 0;

@@ -1,6 +1,6 @@
 package com.example.task3benchmarks.di;
 
-import com.example.task3benchmarks.UseCases;
+import com.example.task3benchmarks.use_case.CalculationUseCases;
 import com.example.task3benchmarks.data.DataSetCreator;
 
 import javax.inject.Singleton;
@@ -19,7 +19,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public UseCases provideUseCases() {
-        return new UseCases();
+    public CalculationUseCases provideUseCases() {
+        return new CalculationUseCases();
     }
 }

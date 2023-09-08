@@ -1,4 +1,4 @@
-package com.example.task3benchmarks;
+package com.example.task3benchmarks.presentation;
 
 import static com.example.task3benchmarks.util.AppConstants.VERTICAL_ITEM_SPACE;
 
@@ -18,11 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.task3benchmarks.AppViewModel;
+import com.example.task3benchmarks.MyApplication;
+import com.example.task3benchmarks.R;
 import com.example.task3benchmarks.data.DataItem;
 import com.example.task3benchmarks.data.DataSetCreator;
 import com.example.task3benchmarks.databinding.FragmentCollectionsBinding;
-import com.example.task3benchmarks.presentation.RecyclerViewAdapter;
-import com.example.task3benchmarks.presentation.VerticalSpaceItemDecoration;
+import com.example.task3benchmarks.presentation.util.RecyclerViewAdapter;
+import com.example.task3benchmarks.presentation.util.VerticalSpaceItemDecoration;
 
 import java.util.List;
 

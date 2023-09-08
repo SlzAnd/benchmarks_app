@@ -1,4 +1,4 @@
-package com.example.task3benchmarks.presentation;
+package com.example.task3benchmarks.presentation.util;
 
 import android.view.LayoutInflater;
 import android.view.View;

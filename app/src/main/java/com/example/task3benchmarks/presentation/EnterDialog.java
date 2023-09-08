@@ -1,4 +1,4 @@
-package com.example.task3benchmarks;
+package com.example.task3benchmarks.presentation;
 
 import static com.example.task3benchmarks.util.AppConstants.EXTRA_KEY;
 import static com.example.task3benchmarks.util.AppConstants.REQUEST_KEY;
@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.task3benchmarks.AppViewModel;
 import com.example.task3benchmarks.databinding.DialogEnterBinding;
 import com.google.android.material.textfield.TextInputEditText;
 

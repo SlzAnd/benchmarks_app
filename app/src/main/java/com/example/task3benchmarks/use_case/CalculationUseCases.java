@@ -1,5 +1,6 @@
-package com.example.task3benchmarks;
+package com.example.task3benchmarks.use_case;
 
+import com.example.task3benchmarks.MyApplication;
 import com.example.task3benchmarks.data.DataItem;
 import com.example.task3benchmarks.data.DataSetCreator;
 import com.example.task3benchmarks.data.Operation;
@@ -19,10 +20,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class UseCases {
+public class CalculationUseCases {
 
     @Inject
-    public UseCases() {
+    public CalculationUseCases() {
         MyApplication.getInstance().getAppComponent().inject(this);
     }
 
