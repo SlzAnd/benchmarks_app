@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-  
-</selector>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item> <!-- Adjust this value to control the curve -->
+        <shape android:shape="rectangle">
+            <solid android:color="@color/web_orange" />
+            <corners android:topLeftRadius="0dp" android:topRightRadius="0dp" android:bottomLeftRadius="16dp" android:bottomRightRadius="16dp" />
+        </shape>
+    </item>
+</layer-list>

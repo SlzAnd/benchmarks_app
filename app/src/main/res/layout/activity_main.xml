@@ -12,9 +12,23 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/web_orange" />
+            android:background="@color/web_orange" >
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_500"
+                android:paddingBottom="9dp"
+                android:text="@string/activity"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
@@ -34,11 +48,11 @@
 
         <include
             android:id="@+id/include_start_stop_field"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/start_stop_field"
             android:layout_marginStart="27dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +65,7 @@
             android:layout_height="match_parent"/>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container"
+            android:id="@+id/dialog_container"
             android:name="com.example.task3benchmarks.EnterDialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.task3benchmarks.databinding.DialogEnterBinding;
@@ -39,7 +37,7 @@ public class EnterDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
     }
 
     @Nullable
@@ -57,12 +55,18 @@ public class EnterDialog extends DialogFragment {
             if (validateInput(number)) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(EXTRA_KEY, number);
-                Log.d("VALIDATED", ""+number);
                 getParentFragmentManager().setFragmentResult(REQUEST_KEY, bundle);
-                dismiss();
+                // START CALCULATION!!
+                if (viewModel.isCollectionsTab) {
+                    viewModel.startCollectionsCalculation();
+                    viewModel.tabsFirstVisit[0] = false;
+                } else {
+                    viewModel.startMapsCalculations();
+                    viewModel.tabsFirstVisit[1] = false;
+                }
+                viewModel.getIsCalculating().setValue(true);
             } else {
                 binding.dialogInputLayout.setError("Error.You need enter elements count.");
-                Log.d("UNVALIDATED", ""+number);
             }
         });
         return binding.getRoot();

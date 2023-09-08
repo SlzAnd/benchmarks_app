@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Task3 Benchmarks</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_dialog_collections_message">Please enter collection size and number of elements to compare</string>
+    <string name="enter_dialog_maps_message">Please enter map size and number of elements to compare</string>
+    <string name="dialog_input_collections_hint_text">Collection size</string>
+    <string name="dialog_input_maps_hint_text">Map size</string>
+    <string name="dialog_btn_text">CALCULATE</string>
+    <string name="dialog_err_message">Error.You need enter elements count.</string>
+
+    <string name="start_stop_hint">Elements amount:</string>
+    <string name="start_button_text">START</string>
+    <string name="stop_button_text">STOP</string>
+    <string name="activity">Activity</string>
+    <string name="collectionAndMaps"><![CDATA[Collection & Maps]]></string>
 </resources>

@@ -1,13 +1,19 @@
 package com.example.task3benchmarks.data;
 
 public class DataItem {
+    private int id;
     private Operation operation;
     private String dataStructure;
     private Long time;
-    public DataItem(Operation operation, String dataStructure, Long time) {
+
+    private boolean isCalculating;
+
+    public DataItem(int id, Operation operation, String dataStructure, Long time, boolean isCalculating) {
+        this.id = id;
         this.operation = operation;
         this.dataStructure = dataStructure;
         this.time = time;
+        this.isCalculating = isCalculating;
     }
 
 
@@ -23,15 +29,29 @@ public class DataItem {
         return dataStructure;
     }
 
-    public void setDataStructure(String dataStructure) {
-        this.dataStructure = dataStructure;
-    }
-
     public Operation getOperation() {
         return operation;
     }
 
-    public void setOperation(Operation operation) {
-        this.operation = operation;
+    @Override
+    public String toString() {
+        return "DataItem{" +
+                "id= " + id +
+                ", operation= " + operation +
+                ", dataStructure='" + dataStructure + '\'' +
+                ", time= " + time +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isCalculating() {
+        return isCalculating;
+    }
+
+    public void setCalculating(boolean calculating) {
+        isCalculating = calculating;
     }
 }

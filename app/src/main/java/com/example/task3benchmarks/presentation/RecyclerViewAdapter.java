@@ -1,14 +1,16 @@
-package com.example.task3benchmarks;
+package com.example.task3benchmarks.presentation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.task3benchmarks.AppViewModel;
+import com.example.task3benchmarks.R;
 import com.example.task3benchmarks.data.DataItem;
 
 import java.util.List;
@@ -16,9 +18,18 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DataViewHolder> {
 
     private List<DataItem> items;
+    private static AppViewModel viewModel;
 
-    public RecyclerViewAdapter(List<DataItem> items) {
+    public RecyclerViewAdapter(List<DataItem> items, AppViewModel viewModel) {
         this.items = items;
+        this.viewModel = viewModel;
+
+        viewModel.getIsCalculating().observeForever(isCalculating -> {
+            if (!isCalculating) {
+                items.forEach(dataItem -> dataItem.setCalculating(false));
+                notifyDataSetChanged();
+            }
+        });
     }
 
 
@@ -33,15 +44,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
         }
         TextView dataItemTextView = itemView.findViewById(R.id.data_item_textView);
+        ProgressBar progressBar = itemView.findViewById(R.id.grid_item_progress_bar);
 
         public void setData(DataItem item, int position) {
+            if (item.isCalculating()) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
             this.currentPosition = position;
             this.dataItem = item;
             String time = "N/A";
             if (item.getTime() != null) {
                 time = item.getTime().toString();
             }
-            StringBuilder text = new StringBuilder(item.getOperation())
+            StringBuilder text = new StringBuilder(item.getOperation().name)
                     .append(" ")
                     .append(item.getDataStructure())
                     .append(" ")
@@ -66,7 +83,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        Log.d("OLHA", ""+items.size());
         return items.size();
     }
 }
