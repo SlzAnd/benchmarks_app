@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,17 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.task3benchmarks.AppViewModel;
-import com.example.task3benchmarks.MyApplication;
 import com.example.task3benchmarks.R;
 import com.example.task3benchmarks.data.DataItem;
-import com.example.task3benchmarks.data.DataSetCreator;
 import com.example.task3benchmarks.databinding.FragmentCollectionsBinding;
 import com.example.task3benchmarks.presentation.util.RecyclerViewAdapter;
 import com.example.task3benchmarks.presentation.util.VerticalSpaceItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 
 public class MapsFragment extends Fragment {
@@ -37,14 +33,12 @@ public class MapsFragment extends Fragment {
     private FragmentCollectionsBinding binding = null;
     AppViewModel viewModel;
 
-    @Inject
-    DataSetCreator dataSetCreator;
+    List<DataItem> mapsItems = new ArrayList<>();
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MyApplication.getInstance().getAppComponent().inject(this);
         viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
     }
 
@@ -63,7 +57,7 @@ public class MapsFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         Context context = requireContext();
-        List<DataItem> mapsItems = dataSetCreator.getMapsDataSet();
+        mapsItems = viewModel.getMapsItems();
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mapsItems, viewModel);
 
         RecyclerView recyclerView = view.findViewById(R.id.collections_recycler_view);
@@ -74,25 +68,20 @@ public class MapsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-
-        viewModel.getIsCalculating().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isCalculating) {
-                if (isCalculating && !viewModel.isCollectionsTab) {
-                    mapsItems.forEach(item -> item.setCalculating(true));
-                    recyclerViewAdapter.notifyDataSetChanged();
-                }
+        viewModel.getIsCalculating().observe(getViewLifecycleOwner(), isCalculating -> {
+            if (isCalculating) {
+                mapsItems = viewModel.getMapsItems();
+                recyclerViewAdapter.notifyDataSetChanged();
             }
         });
 
-        viewModel.getMapsLiveData().observe(getViewLifecycleOwner(), new Observer<DataItem>() {
-            @Override
-            public void onChanged(DataItem item) {
-                if (item != null) {
-                    int itemPosition = item.getId();
-                    mapsItems.set(itemPosition, item);
-                    recyclerViewAdapter.notifyItemChanged(itemPosition);
-                }
+
+        viewModel.getMapsLiveData().observe(getViewLifecycleOwner(), item -> {
+            if (item != null) {
+                int itemPosition = item.getId();
+                mapsItems.set(itemPosition, item);
+                viewModel.setMapsItem(item);
+                recyclerViewAdapter.notifyItemChanged(itemPosition);
             }
         });
     }

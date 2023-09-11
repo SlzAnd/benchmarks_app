@@ -1,5 +1,7 @@
 package com.example.task3benchmarks.data;
 
+import java.util.Objects;
+
 public class DataItem {
     private int id;
     private Operation operation;
@@ -41,6 +43,19 @@ public class DataItem {
                 ", dataStructure='" + dataStructure + '\'' +
                 ", time= " + time +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataItem dataItem = (DataItem) o;
+        return id == dataItem.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public int getId() {

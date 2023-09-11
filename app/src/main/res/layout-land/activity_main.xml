@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_rounded_corners_bg"
+            app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabIndicatorGravity="stretch"
@@ -48,11 +49,10 @@
 
         <include
             android:id="@+id/include_start_stop_field"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             layout="@layout/start_stop_field"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

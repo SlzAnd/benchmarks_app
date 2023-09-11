@@ -30,6 +30,14 @@ public class CalculationUseCases {
     @Inject
     DataSetCreator dataSetCreator;
 
+    public List<DataItem> getInitialCollectionsDataItems() {
+        return dataSetCreator.getCollectionsDataSet();
+    }
+
+    public List<DataItem> getInitialMapsDataItems() {
+        return dataSetCreator.getMapsDataSet();
+    }
+
 
     public Observable<DataItem> getCollectionsObservable(int size) {
         return Observable

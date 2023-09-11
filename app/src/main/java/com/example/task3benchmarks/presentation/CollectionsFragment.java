@@ -27,6 +27,7 @@ import com.example.task3benchmarks.databinding.FragmentCollectionsBinding;
 import com.example.task3benchmarks.presentation.util.RecyclerViewAdapter;
 import com.example.task3benchmarks.presentation.util.VerticalSpaceItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,16 +36,15 @@ import javax.inject.Inject;
 public class CollectionsFragment extends Fragment {
     private FragmentCollectionsBinding binding = null;
 
-    @Inject
-    DataSetCreator dataSetCreator;
-
     AppViewModel viewModel;
+
+    List<DataItem> collectionsItems = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MyApplication.getInstance().getAppComponent().inject(this);
         viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
     }
 
     @Override
@@ -54,43 +54,48 @@ public class CollectionsFragment extends Fragment {
         binding = FragmentCollectionsBinding.inflate(inflater, container, false);
 
         View view = binding.collectionsGrid;
+
         setupRecyclerView(view);
 
         return binding.getRoot();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
     private void setupRecyclerView(View view) {
         Context context = requireContext();
-        List<DataItem> collectionsItems = dataSetCreator.getCollectionsDataSet();
+
+        collectionsItems = viewModel.getCollectionsItems();
+
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(collectionsItems, viewModel);
 
         RecyclerView recyclerView = view.findViewById(R.id.collections_recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(context,
+                3,
+                LinearLayoutManager.VERTICAL,
+                false);
 
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        viewModel.getIsCalculating().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isCalculating) {
-                if (isCalculating && viewModel.isCollectionsTab) {
-                    collectionsItems.forEach(item -> item.setCalculating(true));
-                    recyclerViewAdapter.notifyDataSetChanged();
-                }
+        viewModel.getIsCalculating().observe(getViewLifecycleOwner(), isCalculating -> {
+            if (isCalculating) {
+                collectionsItems = viewModel.getCollectionsItems();
+                recyclerViewAdapter.notifyDataSetChanged();
             }
         });
 
-
-        viewModel.getCollectionsLiveData().observe(getViewLifecycleOwner(), new Observer<DataItem>() {
-            @Override
-            public void onChanged(DataItem dataItem) {
-                if (dataItem != null) {
-                    int itemPosition = dataItem.getId();
-                    collectionsItems.set(itemPosition, dataItem);
-                    recyclerViewAdapter.notifyItemChanged(itemPosition);
-                }
+        viewModel.getCollectionsLiveData().observe(getViewLifecycleOwner(), dataItem -> {
+            if (dataItem != null) {
+                int itemPosition = dataItem.getId();
+                collectionsItems.set(itemPosition, dataItem);
+                viewModel.setCollectionsItem(dataItem);
+                recyclerViewAdapter.notifyItemChanged(itemPosition);
             }
         });
     }

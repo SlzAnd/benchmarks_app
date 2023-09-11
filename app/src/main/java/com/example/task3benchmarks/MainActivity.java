@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding = null;
     AppViewModel viewModel;
-    private int currentTabPosition = 0;
 
 
     @Override
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // widgets
-        Toolbar toolbar = binding.toolbar;
         TabLayout tabLayout = binding.tabLayout;
         ViewPager2 viewPager = binding.viewPager;
         TextInputEditText startStopInput = binding.includeStartStopField.startStopInput;
@@ -49,19 +48,24 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(viewPagerAdapter);
 
+        if (viewModel.tabsFirstVisit[tabLayout.getSelectedTabPosition()]){
+            showEnterDialog();
+        }else {
+            showContent(tabLayout.getSelectedTabPosition());
+        }
+
         // get size value from Dialog window(using ResultAPI) -> update viewModel state
         fragmentManager.setFragmentResultListener(REQUEST_KEY, this, ((requestKey, bundle) -> {
             viewModel.size = bundle.getInt(EXTRA_KEY);
             String stringResult = String.valueOf(viewModel.size);
             startStopInput.setText(stringResult);
-            showContent();
+            showContent(tabLayout.getSelectedTabPosition());
         }));
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                currentTabPosition = tab.getPosition();
                 if (tab.getPosition() == 0) {
                     viewModel.isCollectionsTab = true;
                 } else {
@@ -69,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (viewModel.tabsFirstVisit[tab.getPosition()]) {
-                    showDialog();
+                    showEnterDialog();
                 } else {
-                    viewPager.setCurrentItem(currentTabPosition);
-                    showContent();
+                    showContent(tab.getPosition());
                 }
+                viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Start-Stop Field
 
-        startStopInput.setOnClickListener(v -> showDialog());
+        startStopInput.setOnClickListener(v -> showEnterDialog());
 
         viewModel.getIsCalculating().observe(this, isCalculating -> {
             if (isCalculating) {
@@ -134,18 +138,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showDialog() {
+    private void showEnterDialog() {
         binding.viewPager.setVisibility(View.GONE);
         binding.includeStartStopField.startStopLayout.setVisibility(View.GONE);
         binding.dialogContainer.setVisibility(View.VISIBLE);
         binding.toolbarTitle.setText(R.string.activity);
     }
 
-    private void showContent() {
+    private void showContent(int currentTabIndex) {
         binding.dialogContainer.setVisibility(View.GONE);
         binding.viewPager.setVisibility(View.VISIBLE);
         binding.includeStartStopField.startStopLayout.setVisibility(View.VISIBLE);
         binding.toolbarTitle.setText(R.string.collectionAndMaps);
-        binding.viewPager.setCurrentItem(currentTabPosition);
+        Log.d("CurrTAB", ""+currentTabIndex);
+        binding.viewPager.setCurrentItem(currentTabIndex);
     }
 }
