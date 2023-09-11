@@ -1,5 +1,6 @@
 package com.example.task3benchmarks.use_case;
 
+
 import com.example.task3benchmarks.MyApplication;
 import com.example.task3benchmarks.data.DataItem;
 import com.example.task3benchmarks.data.DataSetCreator;
@@ -47,18 +48,23 @@ public class CalculationUseCases {
                         .map(dataItem -> {
                             dataItem.setCalculating(true);
                             long time = 0;
-                            List<Integer> fullList = new ArrayList<>();
-                            for (int i = 0; i < size; i++) {
-                                fullList.add(i);
-                            }
                             if (Objects.equals(dataItem.getDataStructure(), "ArrayList")) {
-                                ArrayList<Integer> list = new ArrayList<>(fullList);
+                                ArrayList<Integer> list = new ArrayList<>(size);
+                                for (int i = 0; i < size; i++) {
+                                    list.add(i);
+                                }
                                 time = calculateCollectionOperationDuration(list, dataItem.getOperation());
                             } else if (Objects.equals(dataItem.getDataStructure(), "LinkedList")) {
-                                LinkedList<Integer> linkedList = new LinkedList<>(fullList);
+                                LinkedList<Integer> linkedList = new LinkedList<>();
+                                for (int i = 0; i < size; i++) {
+                                    linkedList.add(i);
+                                }
                                 time = calculateCollectionOperationDuration(linkedList, dataItem.getOperation());
                             } else if (Objects.equals(dataItem.getDataStructure(), "CopyOnWriteArrayList")) {
-                                CopyOnWriteArrayList<Integer> COWList = new CopyOnWriteArrayList<>(fullList);
+                                CopyOnWriteArrayList<Integer> COWList = new CopyOnWriteArrayList<>();
+                                for (int i = 0; i < size; i++) {
+                                    COWList.add(i);
+                                }
                                 time = calculateCollectionOperationDuration(COWList, dataItem.getOperation());
                             }
                             dataItem.setTime(time);
@@ -77,17 +83,17 @@ public class CalculationUseCases {
                         .map(dataItem -> {
                             dataItem.setCalculating(true);
                             long time;
-                            StringBuilder stringValue = new StringBuilder();
+                            Integer value = 1;
                             if (Objects.equals(dataItem.getDataStructure(), "HashMap")) {
-                                HashMap<String, String> map = new HashMap<>();
+                                HashMap<Integer, Integer> map = new HashMap<>();
                                 for (int i = 0; i < size; i++) {
-                                    map.put(String.valueOf(i), stringValue.toString());
+                                    map.put(i, value);
                                 }
                                 time = calculateMapOperationDuration(map, dataItem.getOperation());
                             } else {
-                                TreeMap<String, String> treeMap = new TreeMap<>();
+                                TreeMap<Integer, Integer> treeMap = new TreeMap<>();
                                 for (int i = 0; i < size; i++) {
-                                    treeMap.put(String.valueOf(i), stringValue.toString());
+                                    treeMap.put(i, value);
                                 }
                                 time = calculateMapOperationDuration(treeMap, dataItem.getOperation());
                             }
@@ -120,11 +126,11 @@ public class CalculationUseCases {
         return endTime - startTime;
     }
 
-    private Long calculateMapOperationDuration(Map<String, String> map, Operation operation) {
-        String key = String.valueOf(map.size() / 2);
+    private Long calculateMapOperationDuration(Map<Integer, Integer> map, Operation operation) {
+        Integer key = 55555;
         long startTime = System.currentTimeMillis();
         if (operation == Operation.ADD) {
-            map.put("hello", "world");
+            map.put(5, 25);
         } else if (operation == Operation.SEARCH_BY_KEY) {
             map.get(key);
         } else if (operation == Operation.REMOVE) {

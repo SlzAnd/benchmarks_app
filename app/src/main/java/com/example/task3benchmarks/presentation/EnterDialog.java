@@ -74,7 +74,7 @@ public class EnterDialog extends DialogFragment {
     }
 
     private boolean validateInput(int size) {
-        return size >= 100_000 && size <= 1_000_000;
+        return size >= 1_000_000 && size <= 10_000_000;
     }
 
 

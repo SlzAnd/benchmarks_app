@@ -34,7 +34,7 @@ public class AppViewModel extends ViewModel {
     // Variables
     public int size = 0;
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private MutableLiveData<DataItem> collectionsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<DataItem> collectionsLiveData = new MutableLiveData<>();
     private final MutableLiveData<DataItem> mapsLiveData = new MutableLiveData<>();
     public boolean isCollectionsTab = true;
     public boolean[] tabsFirstVisit = {true, true};
