@@ -42,8 +42,8 @@ public class DataSetCreator {
     public List<DataItem> getCollectionsDataSet() {
         List<DataItem> items = new ArrayList<>();
         int index = 0;
-        for (String collection: collections) {
-            for (Operation operation: collectionOperations) {
+        for (String collection : collections) {
+            for (Operation operation : collectionOperations) {
                 items.add(new DataItem(index, operation, collection, null, false));
                 index++;
             }
@@ -54,8 +54,8 @@ public class DataSetCreator {
     public List<DataItem> getMapsDataSet() {
         List<DataItem> items = new ArrayList<>();
         int index = 0;
-        for (String map: maps) {
-            for (Operation operation: mapsOperations) {
+        for (String map : maps) {
+            for (Operation operation : mapsOperations) {
                 items.add(new DataItem(index, operation, map, null, false));
                 index++;
             }

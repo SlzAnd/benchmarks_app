@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,18 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.task3benchmarks.AppViewModel;
-import com.example.task3benchmarks.MyApplication;
 import com.example.task3benchmarks.R;
 import com.example.task3benchmarks.data.DataItem;
-import com.example.task3benchmarks.data.DataSetCreator;
 import com.example.task3benchmarks.databinding.FragmentCollectionsBinding;
 import com.example.task3benchmarks.presentation.util.RecyclerViewAdapter;
 import com.example.task3benchmarks.presentation.util.VerticalSpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 
 public class CollectionsFragment extends Fragment {
@@ -44,25 +39,19 @@ public class CollectionsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentCollectionsBinding.inflate(inflater, container, false);
-
-        View view = binding.collectionsGrid;
-
-        setupRecyclerView(view);
-
         return binding.getRoot();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupRecyclerView(view);
     }
 
     private void setupRecyclerView(View view) {
@@ -70,7 +59,7 @@ public class CollectionsFragment extends Fragment {
 
         collectionsItems = viewModel.getCollectionsItems();
 
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(collectionsItems, viewModel);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(collectionsItems);
 
         RecyclerView recyclerView = view.findViewById(R.id.collections_recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(context,
@@ -86,8 +75,10 @@ public class CollectionsFragment extends Fragment {
         viewModel.getIsCalculating().observe(getViewLifecycleOwner(), isCalculating -> {
             if (isCalculating) {
                 collectionsItems = viewModel.getCollectionsItems();
-                recyclerViewAdapter.notifyDataSetChanged();
+            }  else {
+                collectionsItems.forEach(dataItem -> dataItem.setCalculating(false));
             }
+            recyclerViewAdapter.notifyDataSetChanged();
         });
 
         viewModel.getCollectionsLiveData().observe(getViewLifecycleOwner(), dataItem -> {

@@ -1,7 +1,6 @@
 package com.example.task3benchmarks.presentation.util;
 
 
-
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.view.View;

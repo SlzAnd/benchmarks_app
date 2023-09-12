@@ -1,10 +1,7 @@
-package com.example.task3benchmarks.use_case;
-
+package com.example.task3benchmarks.data;
 
 import com.example.task3benchmarks.MyApplication;
-import com.example.task3benchmarks.data.DataItem;
-import com.example.task3benchmarks.data.DataSetCreator;
-import com.example.task3benchmarks.data.Operation;
+import com.example.task3benchmarks.domain.repositories.CalculationRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,25 +18,27 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class CalculationUseCases {
+public class CalculationRepositoryImpl implements CalculationRepository {
 
     @Inject
-    public CalculationUseCases() {
+    public CalculationRepositoryImpl() {
         MyApplication.getInstance().getAppComponent().inject(this);
     }
 
     @Inject
     DataSetCreator dataSetCreator;
 
-    public List<DataItem> getInitialCollectionsDataItems() {
+    @Override
+    public List<DataItem> getInitialCollectionsDataSet() {
         return dataSetCreator.getCollectionsDataSet();
     }
 
-    public List<DataItem> getInitialMapsDataItems() {
+    @Override
+    public List<DataItem> getInitialMapsDataSet() {
         return dataSetCreator.getMapsDataSet();
     }
 
-
+    @Override
     public Observable<DataItem> getCollectionsObservable(int size) {
         return Observable
                 .fromIterable(dataSetCreator.getCollectionsDataSet())
@@ -75,6 +74,7 @@ public class CalculationUseCases {
                 );
     }
 
+    @Override
     public Observable<DataItem> getMapsObservable(int size) {
         return Observable
                 .fromIterable(dataSetCreator.getMapsDataSet())
@@ -105,6 +105,7 @@ public class CalculationUseCases {
                 );
     }
 
+
     private Long calculateCollectionOperationDuration(List<Integer> list, Operation operation) {
         long startTime = System.currentTimeMillis();
         if (operation == Operation.ADD_START) {
@@ -119,7 +120,7 @@ public class CalculationUseCases {
             list.remove(0);
         } else if (operation == Operation.REMOVE_MIDDLE) {
             list.remove(list.size() / 2);
-        } else if (operation == Operation.REMOVE_END){
+        } else if (operation == Operation.REMOVE_END) {
             list.remove(list.size() - 1);
         }
         long endTime = System.currentTimeMillis();
@@ -137,6 +138,6 @@ public class CalculationUseCases {
             map.remove(key);
         }
         long endTime = System.currentTimeMillis();
-        return  endTime - startTime;
+        return endTime - startTime;
     }
 }

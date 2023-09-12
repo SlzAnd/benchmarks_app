@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.task3benchmarks.data.DataItem;
-import com.example.task3benchmarks.use_case.CalculationUseCases;
+import com.example.task3benchmarks.domain.usecases.CalculationUseCases;
 
 import java.util.List;
 
@@ -24,8 +24,8 @@ public class AppViewModel extends ViewModel {
 
     public AppViewModel() {
         MyApplication.getInstance().getAppComponent().inject(this);
-        collectionsItems = useCases.getInitialCollectionsDataItems();
-        mapsItems = useCases.getInitialMapsDataItems();
+        collectionsItems = useCases.getInitialCollectionsData().execute();
+        mapsItems = useCases.getInitialMapsData().execute();
     }
 
     @Inject
@@ -38,42 +38,46 @@ public class AppViewModel extends ViewModel {
     private final MutableLiveData<DataItem> mapsLiveData = new MutableLiveData<>();
     public boolean isCollectionsTab = true;
     public boolean[] tabsFirstVisit = {true, true};
-    private final MutableLiveData<Boolean>  isCalculating = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> isCalculating = new MutableLiveData<>(false);
     private final List<DataItem> collectionsItems;
     private final List<DataItem> mapsItems;
 
 
-    // Getters
+    // Getters and setters
     public LiveData<DataItem> getCollectionsLiveData() {
         return collectionsLiveData;
-    };
+    }
 
     public LiveData<DataItem> getMapsLiveData() {
         return mapsLiveData;
-    };
+    }
 
-    public MutableLiveData<Boolean> getIsCalculating() {
+    public LiveData<Boolean> getIsCalculating() {
         return isCalculating;
     }
 
-    public  List<DataItem> getCollectionsItems() {
+    public void setIsCalculating(Boolean newValue) {
+        isCalculating.setValue(newValue);
+    }
+
+    public List<DataItem> getCollectionsItems() {
         return collectionsItems;
     }
 
     public void setCollectionsItem(DataItem item) {
         if (collectionsItems.contains(item)) {
             collectionsItems.set(item.getId(), item);
-        };
+        }
     }
 
-    public  List<DataItem> getMapsItems() {
+    public List<DataItem> getMapsItems() {
         return mapsItems;
     }
 
     public void setMapsItem(DataItem item) {
         if (mapsItems.contains(item)) {
             mapsItems.set(item.getId(), item);
-        };
+        }
     }
 
 
@@ -85,7 +89,7 @@ public class AppViewModel extends ViewModel {
         collectionsItems.forEach(dataItem -> dataItem.setCalculating(true));
         isCalculating.setValue(true);
 
-        useCases.getCollectionsObservable(size)
+        useCases.getCollectionsObservable().execute(size)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<>() {
@@ -126,7 +130,7 @@ public class AppViewModel extends ViewModel {
         mapsItems.forEach(dataItem -> dataItem.setCalculating(true));
         isCalculating.setValue(true);
 
-        useCases.getMapsObservable(size)
+        useCases.getMapsObservable().execute(size)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<>() {

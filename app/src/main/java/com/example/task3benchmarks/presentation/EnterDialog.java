@@ -24,8 +24,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 
 public class EnterDialog extends DialogFragment {
-
-    public static String TAG = "EnterDialog";
     private DialogEnterBinding binding = null;
     private AppViewModel viewModel;
 
@@ -45,8 +43,13 @@ public class EnterDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogEnterBinding.inflate(inflater, container, false);
-        changeStyleFromTextChanges(binding.dialogInput);
+        return binding.getRoot();
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        changeStyleFromTextChanges(binding.dialogInput);
         binding.calculateButton.setOnClickListener(v -> {
             TextInputEditText input = binding.dialogInput;
             int number = 0;
@@ -65,12 +68,11 @@ public class EnterDialog extends DialogFragment {
                     viewModel.startMapsCalculations();
                     viewModel.tabsFirstVisit[1] = false;
                 }
-                viewModel.getIsCalculating().setValue(true);
+                viewModel.setIsCalculating(true);
             } else {
                 binding.dialogInputLayout.setError("Error.You need enter elements count.");
             }
         });
-        return binding.getRoot();
     }
 
     private boolean validateInput(int size) {
@@ -102,5 +104,11 @@ public class EnterDialog extends DialogFragment {
             }
 
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        binding = null;
+        super.onDestroyView();
     }
 }

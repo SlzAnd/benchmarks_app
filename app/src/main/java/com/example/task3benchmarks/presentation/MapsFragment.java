@@ -6,6 +6,7 @@ import static com.example.task3benchmarks.util.AppConstants.VERTICAL_ITEM_SPACE;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,20 +46,20 @@ public class MapsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentCollectionsBinding.inflate(inflater, container, false);
-
-        View view = binding.collectionsGrid;
-        setupRecyclerView(view);
-
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupRecyclerView(view);
+    }
 
     private void setupRecyclerView(View view) {
         Context context = requireContext();
         mapsItems = viewModel.getMapsItems();
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mapsItems, viewModel);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(mapsItems);
 
         RecyclerView recyclerView = view.findViewById(R.id.collections_recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(context, 3, LinearLayoutManager.VERTICAL, false);
@@ -71,8 +72,10 @@ public class MapsFragment extends Fragment {
         viewModel.getIsCalculating().observe(getViewLifecycleOwner(), isCalculating -> {
             if (isCalculating) {
                 mapsItems = viewModel.getMapsItems();
-                recyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                mapsItems.forEach(dataItem -> dataItem.setCalculating(false));
             }
+            recyclerViewAdapter.notifyDataSetChanged();
         });
 
 

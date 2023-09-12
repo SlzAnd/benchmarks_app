@@ -15,12 +15,12 @@
             android:height="60dp" />
 
         <gradient
-            android:type="sweep"
             android:angle="10"
-            android:shape= "ring"
-            android:startColor="#FFFFFF"
             android:centerColor="#FFC077"
-            android:endColor="#BD522E" />
+            android:endColor="#BD522E"
+            android:shape="ring"
+            android:startColor="#FFFFFF"
+            android:type="sweep" />
     </shape>
 
 </rotate>

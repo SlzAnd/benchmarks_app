@@ -14,6 +14,7 @@ public enum Operation {
     REMOVE("Removing");
 
     public final String name;
+
     Operation(String name) {
         this.name = name;
     }

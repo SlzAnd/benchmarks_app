@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(viewPagerAdapter);
 
-        if (viewModel.tabsFirstVisit[tabLayout.getSelectedTabPosition()]){
+        if (viewModel.tabsFirstVisit[tabLayout.getSelectedTabPosition()]) {
             showEnterDialog();
-        }else {
+        } else {
             showContent(tabLayout.getSelectedTabPosition());
         }
 
@@ -125,15 +125,15 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     viewModel.stopMapsCalculations();
                 }
-                viewModel.getIsCalculating().setValue(false);
-            // if calculations stopped
+                viewModel.setIsCalculating(false);
+                // if calculations stopped
             } else if (viewModel.getIsCalculating().getValue() != null) {
                 if (viewModel.isCollectionsTab) {
                     viewModel.startCollectionsCalculation();
                 } else {
                     viewModel.startMapsCalculations();
                 }
-                viewModel.getIsCalculating().setValue(true);
+                viewModel.setIsCalculating(true);
             }
         });
     }
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setVisibility(View.VISIBLE);
         binding.includeStartStopField.startStopLayout.setVisibility(View.VISIBLE);
         binding.toolbarTitle.setText(R.string.collectionAndMaps);
-        Log.d("CurrTAB", ""+currentTabIndex);
+        Log.d("CurrTAB", "" + currentTabIndex);
         binding.viewPager.setCurrentItem(currentTabIndex);
     }
 }
