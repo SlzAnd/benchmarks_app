@@ -4,13 +4,11 @@ import static com.example.task3benchmarks.util.AppConstants.EXTRA_KEY;
 import static com.example.task3benchmarks.util.AppConstants.REQUEST_KEY;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showContent(tab.getPosition());
                 }
-                viewPager.setCurrentItem(tab.getPosition());
+                viewPager.setCurrentItem(tab.getPosition(), false);
             }
 
             @Override
@@ -150,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setVisibility(View.VISIBLE);
         binding.includeStartStopField.startStopLayout.setVisibility(View.VISIBLE);
         binding.toolbarTitle.setText(R.string.collectionAndMaps);
-        Log.d("CurrTAB", "" + currentTabIndex);
-        binding.viewPager.setCurrentItem(currentTabIndex);
+        binding.viewPager.setCurrentItem(currentTabIndex, false);
     }
 }
