@@ -1,6 +1,5 @@
-package com.example.task3benchmarks.di;
+package com.example.task3benchmarks;
 
-import com.example.task3benchmarks.CalculationsTest;
 import com.example.task3benchmarks.di.AppComponent;
 import com.example.task3benchmarks.di.AppModule;
 
