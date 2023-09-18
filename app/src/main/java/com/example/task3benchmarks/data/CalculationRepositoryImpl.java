@@ -1,6 +1,6 @@
 package com.example.task3benchmarks.data;
 
-import com.example.task3benchmarks.MyApplication;
+
 import com.example.task3benchmarks.domain.repositories.CalculationRepository;
 
 import java.util.ArrayList;
@@ -14,18 +14,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CalculationRepositoryImpl implements CalculationRepository {
 
     @Inject
-    public CalculationRepositoryImpl() {
-        MyApplication.getInstance().getAppComponent().inject(this);
+    public CalculationRepositoryImpl(DataSetCreator dataSetCreator) {
+        this.dataSetCreator = dataSetCreator;
     }
 
-    @Inject
     DataSetCreator dataSetCreator;
 
     @Override
@@ -60,17 +58,17 @@ public class CalculationRepositoryImpl implements CalculationRepository {
                                 }
                                 time = calculateCollectionOperationDuration(linkedList, dataItem.getOperation());
                             } else if (Objects.equals(dataItem.getDataStructure(), "CopyOnWriteArrayList")) {
-                                CopyOnWriteArrayList<Integer> COWList = new CopyOnWriteArrayList<>();
+                                List<Integer> list = new ArrayList<>();
                                 for (int i = 0; i < size; i++) {
-                                    COWList.add(i);
+                                    list.add(i);
                                 }
+                                CopyOnWriteArrayList<Integer> COWList = new CopyOnWriteArrayList<>(list);
                                 time = calculateCollectionOperationDuration(COWList, dataItem.getOperation());
                             }
                             dataItem.setTime(time);
                             dataItem.setCalculating(false);
                             return dataItem;
                         })
-                        .observeOn(AndroidSchedulers.mainThread())
                 );
     }
 
@@ -79,29 +77,28 @@ public class CalculationRepositoryImpl implements CalculationRepository {
         return Observable
                 .fromIterable(dataSetCreator.getMapsDataSet())
                 .flatMap(item -> Observable.just(item)
-                        .observeOn(Schedulers.computation())
-                        .map(dataItem -> {
-                            dataItem.setCalculating(true);
-                            long time;
-                            Integer value = 1;
-                            if (Objects.equals(dataItem.getDataStructure(), "HashMap")) {
-                                HashMap<Integer, Integer> map = new HashMap<>();
-                                for (int i = 0; i < size; i++) {
-                                    map.put(i, value);
-                                }
-                                time = calculateMapOperationDuration(map, dataItem.getOperation());
-                            } else {
-                                TreeMap<Integer, Integer> treeMap = new TreeMap<>();
-                                for (int i = 0; i < size; i++) {
-                                    treeMap.put(i, value);
-                                }
-                                time = calculateMapOperationDuration(treeMap, dataItem.getOperation());
-                            }
-                            dataItem.setTime(time);
-                            dataItem.setCalculating(false);
-                            return dataItem;
-                        })
-                        .observeOn(AndroidSchedulers.mainThread())
+                                .observeOn(Schedulers.computation())
+                                .map(dataItem -> {
+                                    dataItem.setCalculating(true);
+                                    long time;
+                                    Integer value = 1;
+                                    if (Objects.equals(dataItem.getDataStructure(), "HashMap")) {
+                                        HashMap<Integer, Integer> map = new HashMap<>();
+                                        for (int i = 0; i < size; i++) {
+                                            map.put(i, value);
+                                        }
+                                        time = calculateMapOperationDuration(map, dataItem.getOperation());
+                                    } else {
+                                        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+                                        for (int i = 0; i < size; i++) {
+                                            treeMap.put(i, value);
+                                        }
+                                        time = calculateMapOperationDuration(treeMap, dataItem.getOperation());
+                                    }
+                                    dataItem.setTime(time);
+                                    dataItem.setCalculating(false);
+                                    return dataItem;
+                                })
                 );
     }
 

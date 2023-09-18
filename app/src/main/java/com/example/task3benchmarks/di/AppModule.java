@@ -27,7 +27,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public CalculationRepository provideCalculationRepository() {
-        return new CalculationRepositoryImpl();
+    public CalculationRepository provideCalculationRepository(DataSetCreator dataSetCreator) {
+        return new CalculationRepositoryImpl(dataSetCreator);
     }
 }

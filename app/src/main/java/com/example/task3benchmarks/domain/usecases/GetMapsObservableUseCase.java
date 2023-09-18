@@ -1,5 +1,6 @@
 package com.example.task3benchmarks.domain.usecases;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 
 import com.example.task3benchmarks.MyApplication;
@@ -20,6 +21,6 @@ public class GetMapsObservableUseCase implements ObservableUseCase {
 
     @Override
     public Observable<DataItem> execute(int size) {
-        return repository.getMapsObservable(size);
+        return repository.getMapsObservable(size).observeOn(AndroidSchedulers.mainThread());
     }
 }
