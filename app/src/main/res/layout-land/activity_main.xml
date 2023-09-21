@@ -63,7 +63,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/dialog_container"
-        android:name="com.example.task3benchmarks.presentation.EnterDialog"
+        android:name="com.example.task3benchmarks.kotlin.EnterDialogKt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"

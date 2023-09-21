@@ -21,7 +21,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AppViewModel extends ViewModel {
 
-
     public AppViewModel() {
         MyApplication.getInstance().getAppComponent().inject(this);
         collectionsItems = useCases.getInitialCollectionsData().execute();
@@ -160,6 +159,4 @@ public class AppViewModel extends ViewModel {
         disposables.clear();
         isCalculating.setValue(false);
     }
-
-
 }

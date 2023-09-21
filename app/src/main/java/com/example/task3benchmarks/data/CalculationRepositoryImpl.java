@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import kotlinx.coroutines.flow.Flow;
 
 public class CalculationRepositoryImpl implements CalculationRepository {
 
@@ -77,31 +78,40 @@ public class CalculationRepositoryImpl implements CalculationRepository {
         return Observable
                 .fromIterable(dataSetCreator.getMapsDataSet())
                 .flatMap(item -> Observable.just(item)
-                                .observeOn(Schedulers.computation())
-                                .map(dataItem -> {
-                                    dataItem.setCalculating(true);
-                                    long time;
-                                    Integer value = 1;
-                                    if (Objects.equals(dataItem.getDataStructure(), "HashMap")) {
-                                        HashMap<Integer, Integer> map = new HashMap<>();
-                                        for (int i = 0; i < size; i++) {
-                                            map.put(i, value);
-                                        }
-                                        time = calculateMapOperationDuration(map, dataItem.getOperation());
-                                    } else {
-                                        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
-                                        for (int i = 0; i < size; i++) {
-                                            treeMap.put(i, value);
-                                        }
-                                        time = calculateMapOperationDuration(treeMap, dataItem.getOperation());
-                                    }
-                                    dataItem.setTime(time);
-                                    dataItem.setCalculating(false);
-                                    return dataItem;
-                                })
+                        .observeOn(Schedulers.computation())
+                        .map(dataItem -> {
+                            dataItem.setCalculating(true);
+                            long time;
+                            Integer value = 1;
+                            if (Objects.equals(dataItem.getDataStructure(), "HashMap")) {
+                                HashMap<Integer, Integer> map = new HashMap<>();
+                                for (int i = 0; i < size; i++) {
+                                    map.put(i, value);
+                                }
+                                time = calculateMapOperationDuration(map, dataItem.getOperation());
+                            } else {
+                                TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+                                for (int i = 0; i < size; i++) {
+                                    treeMap.put(i, value);
+                                }
+                                time = calculateMapOperationDuration(treeMap, dataItem.getOperation());
+                            }
+                            dataItem.setTime(time);
+                            dataItem.setCalculating(false);
+                            return dataItem;
+                        })
                 );
     }
 
+    @Override
+    public Flow<DataItem> getCollectionsFlow(int size) {
+        return null;
+    }
+
+    @Override
+    public Flow<DataItem> getMapsFlow(int size) {
+        return null;
+    }
 
     private Long calculateCollectionOperationDuration(List<Integer> list, Operation operation) {
         long startTime = System.currentTimeMillis();

@@ -24,6 +24,12 @@ public class CalculationUseCases {
     @Inject
     GetMapsObservableUseCase mapsObservableUseCase;
 
+    @Inject
+    GetCollectionsFlowUseCase collectionsFlowUseCase;
+
+    @Inject
+    GetMapsFlowUseCase mapsFlowUseCase;
+
 
     public GetInitialCollectionsDataUseCase getInitialCollectionsData() {
         return initialCollectionsDataUseCase;
@@ -39,5 +45,13 @@ public class CalculationUseCases {
 
     public GetMapsObservableUseCase getMapsObservable() {
         return mapsObservableUseCase;
+    }
+
+    public GetCollectionsFlowUseCase getCollectionsFlow() {
+        return collectionsFlowUseCase;
+    }
+
+    public GetMapsFlowUseCase getMapsFlow() {
+        return mapsFlowUseCase;
     }
 }

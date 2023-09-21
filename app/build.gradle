@@ -65,12 +65,17 @@ dependencies {
     // LifeCycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
 
     //RxJava and RxAndroid
     implementation "io.reactivex.rxjava3:rxjava:3.1.7"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
 
-//    // Dagger Hilt
+    // Dagger Hilt
     implementation 'com.google.dagger:dagger:2.48'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.48'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 }
