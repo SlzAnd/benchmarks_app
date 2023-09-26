@@ -13,8 +13,8 @@ import com.example.task3benchmarks.kotlin.CollectionsFragmentKt;
 import com.example.task3benchmarks.kotlin.EnterDialogKt;
 import com.example.task3benchmarks.kotlin.MainActivityKt;
 import com.example.task3benchmarks.kotlin.MapsFragmentKt;
-import com.example.task3benchmarks.presentation.CollectionsFragment;
-import com.example.task3benchmarks.presentation.MapsFragment;
+//import com.example.task3benchmarks.presentation.CollectionsFragment;
+//import com.example.task3benchmarks.presentation.MapsFragment;
 import com.example.task3benchmarks.domain.usecases.CalculationUseCases;
 
 import javax.inject.Singleton;
@@ -30,9 +30,9 @@ public interface AppComponent {
 
     void inject(AppViewModel viewModel);
 
-    void inject(CollectionsFragment collectionsFragment);
-
-    void inject(MapsFragment mapsFragment);
+//    void inject(CollectionsFragment collectionsFragment);
+//
+//    void inject(MapsFragment mapsFragment);
 
     void inject(GetInitialCollectionsDataUseCase getInitialCollectionsDataUseCase);
 

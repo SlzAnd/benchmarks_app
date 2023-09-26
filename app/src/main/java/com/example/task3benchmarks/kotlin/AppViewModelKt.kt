@@ -36,15 +36,11 @@ class AppViewModelKt @Inject constructor(
     fun onEvent(event: AppEvent) {
         when (event) {
             is AppEvent.SetCollectionsItem -> {
-                if (collectionsItems.contains(event.item)) {
-                    collectionsItems[event.item.id] = event.item
-                }
+                collectionsItems[event.item.id] = event.item
             }
 
             is AppEvent.SetMapsItem -> {
-                if (mapsItems.contains(event.item)) {
-                    mapsItems[event.item.id] = event.item
-                }
+                mapsItems[event.item.id] = event.item
             }
 
             AppEvent.StartCollectionsCalculation -> {
@@ -53,6 +49,7 @@ class AppViewModelKt @Inject constructor(
                     dataItem.isCalculating = true
                 }
                 _isCalculating.setValue(true)
+
                 viewModelScope.launch {
                     useCases.collectionsFlow.execute(size)
                         .takeWhile { isCalculating.value!! }

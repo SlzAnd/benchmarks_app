@@ -22,7 +22,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.items = items;
     }
 
-
     public static class DataViewHolder extends RecyclerView.ViewHolder {
 
 

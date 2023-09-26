@@ -37,11 +37,11 @@ class CollectionsFragmentKt : BaseFragmentKt() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = binding!!.collectionsRecyclerView
-        super.setupRecyclerView(
+        val composeView = binding?.collectionsComposeView
+        super.setupGridLayout(
             viewModel.collectionsLiveData,
             viewModel,
-            recyclerView
+            composeView
         )
     }
 

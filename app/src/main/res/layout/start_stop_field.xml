@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="-90dp"
         android:background="@drawable/start_stop_button_rectangle"
-        android:fontFamily="@font/poppins_500"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/start_button_text"
         android:textColor="@color/white"
         android:textSize="14sp"

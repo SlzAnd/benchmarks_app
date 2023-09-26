@@ -9,25 +9,30 @@
     android:orientation="vertical"
     tools:context=".kotlin.MainActivityKt">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/web_orange"
-        android:textAlignment="center">
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/toolbar_compose_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/poppins_500"
-            android:paddingBottom="9dp"
-            android:text="@string/activity"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-    </androidx.appcompat.widget.Toolbar>
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="?attr/actionBarSize"-->
+    <!--        android:background="@color/web_orange"-->
+    <!--        android:textAlignment="center">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/toolbar_title"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:fontFamily="@font/poppins_medium"-->
+    <!--            android:paddingBottom="9dp"-->
+    <!--            android:text="@string/activity"-->
+    <!--            android:textAlignment="center"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="14sp" />-->
+    <!--    </androidx.appcompat.widget.Toolbar>-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
@@ -44,16 +49,21 @@
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/black" />
 
-    <include
-        android:id="@+id/include_start_stop_field"
-        layout="@layout/start_stop_field"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/start_stop_field_compose_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content" />
+
+    <!--    <include-->
+    <!--        android:id="@+id/include_start_stop_field"-->
+    <!--        layout="@layout/start_stop_field"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

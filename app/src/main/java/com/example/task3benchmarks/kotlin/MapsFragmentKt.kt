@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModelProvider
 import com.example.task3benchmarks.MyApplication
 import com.example.task3benchmarks.data.DataItem
@@ -36,11 +38,11 @@ class MapsFragmentKt : BaseFragmentKt() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = binding!!.mapsRecyclerView
-        super.setupRecyclerView(
+        val composeView = binding?.mapsComposeView
+        super.setupGridLayout(
             viewModel.mapsLiveData,
             viewModel,
-            recyclerView
+            composeView
         )
     }
 

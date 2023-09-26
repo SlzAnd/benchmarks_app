@@ -1,9 +1,9 @@
 package com.example.task3benchmarks.domain.repositories;
 
+import com.example.task3benchmarks.data.DataItem;
+
 import io.reactivex.rxjava3.core.Observable;
 import kotlinx.coroutines.flow.Flow;
-
-import com.example.task3benchmarks.data.DataItem;
 
 import java.util.List;
 
