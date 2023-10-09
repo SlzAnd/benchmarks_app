@@ -1,4 +1,4 @@
-Hi, my name is Andrii, and welcome to the Anagram creator project!
+Hi, my name is Andrii, and welcome to the Benchmarks project!
 
 ## What I used in this project:
 
